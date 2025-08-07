@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./style/guess.css">
+    <link rel="stylesheet" href="./style/message.css">
+    <title>叶子🍀-猜干员</title>
+</head>
+<body>
+    <div class="content-card card-hoverable">
+        <h1>明日方舟-猜干员</h1>
+        <p>🍀</p>
+        <p>
+            昵称
+        <input type="text" id="nickname-input" placeholder="输入你的昵称..."></p>
+        <p>
+            选择难度
+        <select id="difficulty-select" title="选择难度">
+            <option value="medium">6星</option>
+            <option value="hard">海猫</option>
+        </select></p>
+        <p>选择身份
+        <select id="role-select" title="选择身份">
+            <option value="guess">我要猜</option>
+            <option value="question">我要问</option>
+        </select></p>
+        <p>
+            选择房间
+        <select id="room-select" title="选择房间">
+            <option value="room1">拉特兰</option>
+            <option value="room2">罗德岛</option>
+            <option value="room3">萨卡兹</option>
+        </select></p>
+            <button id="start-game-button" onclick="joinRoom()" class="game-button primary start-button" style="background-color: #4CAF50; color: white; padding: 12px 24px; border: none; border-radius: 4px; cursor: pointer; font-size: 16px; transition: background-color 0.3s;">准备</button>
+        <div id="game-controls"></div> 
+        <p>
+            玩家：
+            <span id="player-count"></span>
+        </p>
+        <p>
+            游戏状态：
+            <span id="game-status"></span>
+            <button id="refresh-data-btn" class="game-button icon">♻️</button>
+        </p>
+        <div id="game-info">
+            <p>
+                游戏规则：
+                <button id="rules-btn" class="game-button icon">❓</button>
+            </p>      
+        </div>
+        <div id="game-control-button">
+
+        </div>
+    </div>
+    <div class="game-container">
+        <div id="game-card" class="content-card card-hoverable game-content" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; padding: 20px;">
+            <button id="random-operators-btn" class="game-button secondary" style="display:none;">随机选择25名干员</button>
+            <!-- 动态生成25个图片容器 -->
+            <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; width: 100%;">
+                <!-- 重复25次 -->
+                <div class="operator-image-container" style="width: 128px; height: 128px; overflow: hidden; border-radius: 8px;">
+                    <img src="./avatars/land.png" alt="干员图片" style="width: 100%; height: 100%; object-fit: cover;" onerror="this.src='./avatars/land.png'">
+                </div>
+                <div class="operator-image-container" style="width: 128px; height: 128px; overflow: hidden; border-radius: 8px;">
+                    <img src="./avatars/land.png" alt="干员图片" style="width: 100%; height: 100%; object-fit: cover;" onerror="this.src='./avatars/land.png'">
+                </div>
+                <div class="operator-image-container" style="width: 128px; height: 128px; overflow: hidden; border-radius: 8px;">
+                    <img src="./avatars/land.png" alt="干员图片" style="width: 100%; height: 100%; object-fit: cover;" onerror="this.src='./avatars/land.png'">
+                </div>
+                <div class="operator-image-container" style="width: 128px; height: 128px; overflow: hidden; border-radius: 8px;">
+                    <img src="./avatars/land.png" alt="干员图片" style="width: 100%; height: 100%; object-fit: cover;" onerror="this.src='./avatars/land.png'">
+                </div>
+                <div class="operator-image-container" style="width: 128px; height: 128px; overflow: hidden; border-radius: 8px;">
+                    <img src="./avatars/land.png" alt="干员图片" style="width: 100%; height: 100%; object-fit: cover;" onerror="this.src='./avatars/land.png'">
+                </div>
+                <div class="operator-image-container" style="width: 128px; height: 128px; overflow: hidden; border-radius: 8px;">
+                    <img src="./avatars/land.png" alt="干员图片" style="width: 100%; height: 100%; object-fit: cover;" onerror="this.src='./avatars/land.png'">
+                </div>
+                <div class="operator-image-container" style="width: 128px; height: 128px; overflow: hidden; border-radius: 8px;">
+                    <img src="./avatars/land.png" alt="干员图片" style="width: 100%; height: 100%; object-fit: cover;" onerror="this.src='./avatars/land.png'">
+                </div>
+                <div class="operator-image-container" style="width: 128px; height: 128px; overflow: hidden; border-radius: 8px;">
+                    <img src="./avatars/land.png" alt="干员图片" style="width: 100%; height: 100%; object-fit: cover;" onerror="this.src='./avatars/land.png'">
+                </div>
+                <div class="operator-image-container" style="width: 128px; height: 128px; overflow: hidden; border-radius: 8px;">
+                    <img src="./avatars/land.png" alt="干员图片" style="width: 100%; height: 100%; object-fit: cover;" onerror="this.src='./avatars/land.png'">
+                </div>
+                <div class="operator-image-container" style="width: 128px; height: 128px; overflow: hidden; border-radius: 8px;">
+                    <img src="./avatars/land.png" alt="干员图片" style="width: 100%; height: 100%; object-fit: cover;" onerror="this.src='./avatars/land.png'">
+                </div>
+                <div class="operator-image-container" style="width: 128px; height: 128px; overflow: hidden; border-radius: 8px;">
+                    <img src="./avatars/land.png" alt="干员图片" style="width: 100%; height: 100%; object-fit: cover;" onerror="this.src='./avatars/land.png'">
+                </div>
+                <div class="operator-image-container" style="width: 128px; height: 128px; overflow: hidden; border-radius: 8px;">
+                    <img src="./avatars/land.png" alt="干员图片" style="width: 100%; height: 100%; object-fit: cover;" onerror="this.src='./avatars/land.png'">
+                </div>
+                <div class="operator-image-container" style="width: 128px; height: 128px; overflow: hidden; border-radius: 8px;">
+                    <img src="./avatars/land.png" alt="干员图片" style="width: 100%; height: 100%; object-fit: cover;" onerror="this.src='./avatars/land.png'">
+                </div>
+                <div class="operator-image-container" style="width: 128px; height: 128px; overflow: hidden; border-radius: 8px;">
+                    <img src="./avatars/land.png" alt="干员图片" style="width: 100%; height: 100%; object-fit: cover;" onerror="this.src='./avatars/land.png'">
+                </div>
+                <div class="operator-image-container" style="width: 128px; height: 128px; overflow: hidden; border-radius: 8px;">
+                    <img src="./avatars/land.png" alt="干员图片" style="width: 100%; height: 100%; object-fit: cover;" onerror="this.src='./avatars/land.png'">
+                </div>
+                <div class="operator-image-container" style="width: 128px; height: 128px; overflow: hidden; border-radius: 8px;">
+                    <img src="./avatars/land.png" alt="干员图片" style="width: 100%; height: 100%; object-fit: cover;" onerror="this.src='./avatars/land.png'">
+                </div>
+                <div class="operator-image-container" style="width: 128px; height: 128px; overflow: hidden; border-radius: 8px;">
+                    <img src="./avatars/land.png" alt="干员图片" style="width: 100%; height: 100%; object-fit: cover;" onerror="this.src='./avatars/land.png'">
+                </div>
+                <div class="operator-image-container" style="width: 128px; height: 128px; overflow: hidden; border-radius: 8px;">
+                    <img src="./avatars/land.png" alt="干员图片" style="width: 100%; height: 100%; object-fit: cover;" onerror="this.src='./avatars/land.png'">
+                </div>
+                <div class="operator-image-container" style="width: 128px; height: 128px; overflow: hidden; border-radius: 8px;">
+                    <img src="./avatars/land.png" alt="干员图片" style="width: 100%; height: 100%; object-fit: cover;" onerror="this.src='./avatars/land.png'">
+                </div>
+                <div class="operator-image-container" style="width: 128px; height: 128px; overflow: hidden; border-radius: 8px;">
+                    <img src="./avatars/land.png" alt="干员图片" style="width: 100%; height: 100%; object-fit: cover;" onerror="this.src='./avatars/land.png'">
+                </div>
+                <div class="operator-image-container" style="width: 128px; height: 128px; overflow: hidden; border-radius: 8px;">
+                    <img src="./avatars/land.png" alt="干员图片" style="width: 100%; height: 100%; object-fit: cover;" onerror="this.src='./avatars/land.png'">
+                </div>
+                <div class="operator-image-container" style="width: 128px; height: 128px; overflow: hidden; border-radius: 8px;">
+                    <img src="./avatars/land.png" alt="干员图片" style="width: 100%; height: 100%; object-fit: cover;" onerror="this.src='./avatars/land.png'">
+                </div>
+                <div class="operator-image-container" style="width: 128px; height: 128px; overflow: hidden; border-radius: 8px;">
+                    <img src="./avatars/land.png" alt="干员图片" style="width: 100%; height: 100%; object-fit: cover;" onerror="this.src='./avatars/land.png'">
+                </div>
+                <div class="operator-image-container" style="width: 128px; height: 128px; overflow: hidden; border-radius: 8px;">
+                    <img src="./avatars/land.png" alt="干员图片" style="width: 100%; height: 100%; object-fit: cover;" onerror="this.src='./avatars/land.png'">
+                </div>
+                <div class="operator-image-container" style="width: 128px; height: 128px; overflow: hidden; border-radius: 8px;">
+                    <img src="./avatars/land.png" alt="干员图片" style="width: 100%; height: 100%; object-fit: cover;" onerror="this.src='./avatars/land.png'">
+                </div>
+            </div>
+        </div>
+        <div class="content-card card-hoverable message-panel">
+            <div id="chat-container" ></div>
+            <div id="message-container">
+                <input type="text" id="message-input" placeholder="输入消息...">
+                <button id="send-button">发送</button>
+            </div>
+        </div>
+    </div>
+    <script src='./script/guess.js' defer></script>
+</body>
+</html>
