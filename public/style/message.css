@@ -1,0 +1,130 @@
+/* 消息容器样式 */
+#message-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 20px;
+  height: 100%;
+  width: 400px; /* 固定宽度 */
+  resize: horizontal; /* 可水平拖动调整 */
+  overflow: hidden; /* 隐藏滚动条 */
+  overflow-wrap: break-word; /* 自动换行 */
+  background-color: #f5f5f5;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  min-width: 200px; /* 最小宽度 */
+  max-width: 500px; /* 最大宽度 */
+  border-right: 2px solid yellow; /* 调整区域标记 */
+}
+
+/* 消息气泡基础样式 */
+.message {
+  padding: 12px 16px;
+  border-radius: 20px;
+  max-width: 70%;
+  word-wrap: break-word;
+  font-size: 16px;
+  line-height: 1.4;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  transition: all 0.3s ease;
+  margin-bottom: 8px;
+}
+
+/* 玩家1消息样式 */
+.message.chat.player1 {
+  background-color: #156299;
+  color: #0d47a1;
+  align-self: flex-start;
+  border: 1px solid #bbdefb;
+  margin-right: auto;
+  position: relative;
+}
+
+.message.chat.player1::before {
+  content: '';
+  position: absolute;
+  left: -8px;
+  top: 12px;
+  width: 0;
+  height: 0;
+  border-top: 8px solid transparent;
+  border-right: 8px solid #e3f2fd;
+  border-bottom: 8px solid transparent;
+}
+
+/* 玩家2消息样式 */
+.message.chat.player2 {
+  background-color: #f1f8e9;
+  color: #33691e;
+  align-self: flex-start;
+  border: 1px solid #dcedc8;
+  margin-right: auto;
+  position: relative;
+}
+
+.message.chat.player2::before {
+  content: '';
+  position: absolute;
+  left: -8px;
+  top: 12px;
+  width: 0;
+  height: 0;
+  border-top: 8px solid transparent;
+  border-right: 8px solid #f1f8e9;
+  border-bottom: 8px solid transparent;
+}
+
+/* 系统消息样式 */
+.message.system {
+  background-color: #f0f7ff;
+  color: #0066cc;
+  align-self: center;
+  border: 1px solid #cce0ff;
+  font-style: italic;
+}
+
+/* 错误消息样式 */
+.message.error {
+  background-color: #ffebee;
+  color: #d32f2f;
+  align-self: center;
+  border: 1px solid #ffcdd2;
+}
+
+/* 输入区域样式 */
+#message-input {
+  width: 100%;
+  padding: 12px 15px;
+  border: 1px solid #ddd;
+  border-radius: 20px;
+  font-size: 16px;
+  margin-right: 10px;
+}
+
+/* 发送按钮样式 */
+#send-button {
+  padding: 12px 20px;
+  background-color: #0084ff;
+  color: white;
+  border: none;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+#send-button:hover {
+  background-color: #0073e6;
+}
+
+/* 输入区域容器 */
+.input-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+  background-color: white;
+  border-top: 1px solid #e0e0e0;
+  width: 100%;
+  box-sizing: border-box;
+}

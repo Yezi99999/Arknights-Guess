@@ -1,0 +1,99 @@
+*{
+    margin: auto;
+    padding: 0;
+    box-sizing: border-box;
+}
+body{
+    padding-top: 80px;
+    text-align: center;
+    background: url('../background.png') no-repeat center center fixed;
+    background-size: cover;
+    isolation: isolate;
+}
+
+.dropdown-content a:hover {
+  background: #808080;
+}
+.content-card{
+  width: 80%;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  margin-top: 20px;
+  padding: 24px;
+  border: 1px solid #eee;
+  transition: transform 0.5s, box-shadow 0.5s;
+  opacity: 0.8;
+}
+
+.game-container {
+  margin-left: 10%; /* 调整左侧边距 */;
+  display: flex;
+  gap: 20px;
+  opacity: 1;
+  isolation: isolate;
+}
+#game-card{
+  opacity: 1;
+  isolation: isolate;
+}
+.game-content {
+  flex: 7;
+  
+}
+
+.message-panel {
+  margin-right: 11%; /* 调整右侧边距 */;
+  flex: 1;
+}
+/* 基础卡片 */
+.card {
+  width: 80%;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  margin-top:24px;
+  padding: 24px;
+  transition: transform 0.5s, box-shadow 0.5s;
+  display: flex;
+}
+/* 悬停效果 */
+.card-hoverable:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+}
+
+/* 表单元素样式 */
+#nickname-input, #difficulty-select, #role-select {
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 16px;
+  margin-left: 10px;
+  transition: all 0.3s ease;
+}
+
+#nickname-input {
+  width: 200px;
+}
+
+#difficulty-select, #role-select {
+  min-width: 120px;
+}
+
+#start-game-button {
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px 20px;
+  margin-top: 8px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 12px;
+  transition: background-color 0.3s;
+}
+
+#start-game-button:hover {
+  background-color: #45a049;
+}
+
