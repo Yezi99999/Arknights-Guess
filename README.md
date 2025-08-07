@@ -25,6 +25,12 @@ nodeJs
 
 4. 干员数据operators.json文件中。
 
+## 开始游戏
+web页面为public/index.html
+前端页面可使用nginx/python等代理到端口，推荐使用nginx
+node服务为server.js
+启动node服务：node server.js
+//node 端口 默认为8080，注意端口占用
 
 ### 参与人员：
 
@@ -32,3 +38,4 @@ nodeJs
 
 
 想法建设：瞳老师>> [**绯瞳Hitomi**](https://space.bilibili.com/700489083) 
+
