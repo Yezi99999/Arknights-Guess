@@ -36,7 +36,6 @@ export function renderOperators() {
       img.classList.add('selected');
       img.style.border = '3px solid #4CAF50';
 
-      gameState.selectedOperator = null;
       const selectedAlt = img.alt.trim();
       gameState.selectedOperator = { name: selectedAlt };
     });
