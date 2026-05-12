@@ -1,99 +1,341 @@
-*{
-    margin: auto;
+* {
+    margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
-body{
-    padding-top: 80px;
+
+html, body {
+    height: 100%;
+    overflow: hidden;
+}
+
+body {
+    padding-top: 0;
     text-align: center;
     background: url('../background.png') no-repeat center center fixed;
     background-size: cover;
     isolation: isolate;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
 }
 
-.dropdown-content a:hover {
-  background: #808080;
-}
-.content-card{
-  width: 80%;
-  background: #fff;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-  margin-top: 20px;
-  padding: 24px;
-  border: 1px solid #eee;
-  transition: transform 0.5s, box-shadow 0.5s;
-  opacity: 0.8;
+.game-wrapper {
+    display: flex;
+    width: 100%;
+    height: 100vh;
+    gap: 15px;
+    padding: 15px;
 }
 
-.game-container {
-  margin-left: 10%; /* 调整左侧边距 */;
-  display: flex;
-  gap: 20px;
-  opacity: 1;
-  isolation: isolate;
+.left-panel {
+    width: 280px;
+    height: 100%;
+    flex-shrink: 0;
+    overflow-y: auto;
 }
-#game-card{
-  opacity: 1;
-  isolation: isolate;
+
+.right-panel {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    min-width: 0;
+    height: 100%;
 }
+
+.content-card {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    padding: 15px;
+    border: 1px solid #eee;
+    transition: transform 0.3s, box-shadow 0.3s;
+    opacity: 0.95;
+}
+
+.card-hoverable:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+}
+
+.left-panel .content-card {
+    width: 100%;
+}
+
 .game-content {
-  flex: 7;
-  
+    flex: 4;
+    overflow-y: auto;
+    min-height: 450px;
 }
 
 .message-panel {
-  margin-right: 11%; /* 调整右侧边距 */;
-  flex: 1;
-}
-/* 基础卡片 */
-.card {
-  width: 80%;
-  background: #fff;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-  margin-top:24px;
-  padding: 24px;
-  transition: transform 0.5s, box-shadow 0.5s;
-  display: flex;
-}
-/* 悬停效果 */
-.card-hoverable:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+    flex: 1;
+    max-height: 280px;
 }
 
-/* 表单元素样式 */
-#nickname-input, #difficulty-select, #role-select {
-  padding: 8px 12px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  font-size: 16px;
-  margin-left: 10px;
-  transition: all 0.3s ease;
+.operators-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+    padding: 15px;
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
+    align-content: flex-start;
+}
+
+.operator-image-container {
+    width: 100px;
+    height: 100px;
+    overflow: hidden;
+    border-radius: 8px;
+    flex-shrink: 0;
+}
+
+.operator-image-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    cursor: pointer;
+    transition: transform 0.2s, border 0.2s;
+}
+
+.operator-image-container img:hover {
+    transform: scale(1.05);
+}
+
+.operator-image-container img.selected {
+    border: 3px solid #4CAF50 !important;
+    box-shadow: 0 0 8px rgba(76, 175, 80, 0.5);
 }
 
 #nickname-input {
-  width: 200px;
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+    width: 150px;
+    transition: all 0.3s ease;
 }
 
-#difficulty-select, #role-select {
-  min-width: 120px;
+#nickname-input:focus {
+    border-color: #4CAF50;
+    outline: none;
+}
+
+#difficulty-select, #role-select, #room-select {
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+    min-width: 100px;
+    cursor: pointer;
+}
+
+.game-button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.3s ease;
+}
+
+.game-button.primary {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.game-button.primary:hover {
+    background-color: #45a049;
+}
+
+.game-button.secondary {
+    background-color: #ff9800;
+    color: white;
+}
+
+.game-button.secondary:hover {
+    background-color: #fb8c00;
+}
+
+.game-button.icon {
+    background: none;
+    border: 1px solid #ddd;
+    padding: 6px 12px;
+}
+
+.game-button.icon:hover {
+    background-color: #f5f5f5;
 }
 
 #start-game-button {
-  background-color: #4CAF50;
-  color: white;
-  padding: 10px 20px;
-  margin-top: 8px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  font-size: 12px;
-  transition: background-color 0.3s;
+    width: 100%;
+    margin-top: 10px;
 }
 
-#start-game-button:hover {
-  background-color: #45a049;
+.player-section {
+    margin-top: 15px;
+    text-align: left;
 }
 
+.player-section p {
+    margin-bottom: 8px;
+    font-weight: 500;
+}
+
+#player-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 10px;
+}
+
+.player-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px;
+    background: #f5f5f5;
+    border-radius: 6px;
+}
+
+.player-item .status-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.player-item .status-dot.ready {
+    background-color: #4CAF50;
+}
+
+.player-item .status-dot.not-ready {
+    background-color: #ff9800;
+}
+
+.player-item .player-name {
+    flex: 1;
+    text-align: left;
+    font-size: 14px;
+}
+
+.player-item .player-ready {
+    font-size: 12px;
+    color: #4CAF50;
+}
+
+.status-section {
+    margin-top: 15px;
+    text-align: left;
+}
+
+.status-section p {
+    margin-bottom: 8px;
+}
+
+#game-status {
+    font-weight: 500;
+    color: #2196F3;
+}
+
+#player-status {
+    font-size: 14px;
+    color: #666;
+}
+
+#player-status.full {
+    color: #f44336;
+}
+
+#game-info {
+    margin-top: 15px;
+}
+
+#rules-btn {
+    vertical-align: middle;
+}
+
+#game-control-button {
+    margin-top: 15px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+}
+
+#game-control-button .game-button {
+    min-width: 80px;
+}
+
+.hidden {
+    display: none !important;
+}
+
+@media (max-width: 768px) {
+    .game-wrapper {
+        flex-direction: column;
+        padding: 10px;
+        gap: 10px;
+    }
+
+    .left-panel {
+        width: 100%;
+        height: auto;
+        max-height: 30vh;
+    }
+
+    .right-panel {
+        height: auto;
+        flex: 1;
+        min-height: 0;
+    }
+
+    .game-content {
+        max-height: 55vh;
+        min-height: 300px;
+    }
+
+    .operator-image-container {
+        width: 70px;
+        height: 70px;
+    }
+
+    #message-panel {
+        display: none;
+    }
+
+    .floating-chat {
+        display: flex !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .left-panel .content-card {
+        padding: 12px;
+    }
+
+    #nickname-input {
+        width: 120px;
+    }
+
+    #difficulty-select, #role-select, #room-select {
+        min-width: 80px;
+        font-size: 12px;
+    }
+
+    .operator-image-container {
+        width: 55px;
+        height: 55px;
+    }
+
+    h1 {
+        font-size: 16px;
+    }
+
+    .game-button {
+        padding: 8px 14px;
+        font-size: 12px;
+    }
+}

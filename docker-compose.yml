@@ -1,0 +1,21 @@
+version: '3.8'
+
+services:
+  arknights-guess:
+    build: .
+    ports:
+      - "8080:8080"
+    environment:
+      - PORT=8080
+      - NGROK_ENABLED=false
+      - NGROK_REGION=us
+    volumes:
+      - .:/app
+      - /app/node_modules
+    restart: unless-stopped
+    networks:
+      - game-network
+
+networks:
+  game-network:
+    driver: bridge

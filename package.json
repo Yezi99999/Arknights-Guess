@@ -1,0 +1,21 @@
+{
+  "name": "arknights-guess",
+  "version": "2.0.0",
+  "description": "明日方舟干员猜猜猜游戏",
+  "main": "server/index.js",
+  "scripts": {
+    "start": "node server/index.js",
+    "dev": "node server/index.js",
+    "docker:build": "docker-compose build",
+    "docker:up": "docker-compose up",
+    "docker:up-d": "docker-compose up -d",
+    "docker:down": "docker-compose down"
+  },
+  "dependencies": {
+    "ws": "^8.14.2"
+  },
+  "devDependencies": {},
+  "keywords": ["arknights", "game", "guess", "websocket"],
+  "author": "叶子🍀",
+  "license": "MIT"
+}
