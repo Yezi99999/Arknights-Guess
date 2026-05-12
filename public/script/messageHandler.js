@@ -1,6 +1,6 @@
 import { gameState, resetGameState } from './gameState.js';
 import { renderOperators, updatePlayerList, updateGameStatus, displayChatMessage } from './renderer.js';
-import { createStartButton, addRestartButton } from './uiComponents.js';
+import { createStartButton, addRestartButton, setupGameControls } from './uiComponents.js';
 
 export function handleMessage(message) {
   try {
@@ -12,11 +12,19 @@ export function handleMessage(message) {
       case 'game_start':
         console.log('游戏开始:', message.message);
         resetGameState();
+        gameState.guessCount = 0;
         renderOperators();
+        setupGameControls(gameState.role);
         break;
 
       case 'player_joined':
         updatePlayerList(message.players);
+        if (message.wantsRestartCount !== undefined) {
+          const playerCount = gameState.players.length;
+          if (message.wantsRestartCount > 0 && message.wantsRestartCount < playerCount) {
+            updateGameStatus(`等待对方点击再来一局 (${message.wantsRestartCount}/${playerCount})`);
+          }
+        }
         break;
 
       case 'game_state':
@@ -97,6 +105,34 @@ export function handleMessage(message) {
         break;
 
       case 'guess_result':
+        if (message.message) {
+          displayChatMessage({
+            roomId: gameState.roomId,
+            nickname: '系统',
+            content: message.message
+          });
+          
+          if (message.guessCount !== undefined) {
+            gameState.guessCount = message.guessCount;
+          }
+        }
+        break;
+
+      case 'game_lost':
+        if (message.message) {
+          displayChatMessage({
+            roomId: gameState.roomId,
+            nickname: '系统',
+            content: message.message
+          });
+
+          gameState.gameOver = true;
+          updateGameStatus('游戏结束！猜错次数过多，挑战失败！');
+          addRestartButton();
+        }
+        break;
+
+      case 'restart_notification':
         if (message.message) {
           displayChatMessage({
             roomId: gameState.roomId,

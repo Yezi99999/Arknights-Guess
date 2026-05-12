@@ -1,6 +1,8 @@
 const roomManager = require('./roomManager');
 const gameLogic = require('./gameLogic');
 
+const MAX_GUESSES = 3;
+
 class MessageHandler {
   constructor() {
     this.messageHandlers = {
@@ -167,6 +169,10 @@ class MessageHandler {
       return;
     }
 
+    if (!player.guessCount) {
+      player.guessCount = 0;
+    }
+
     const result = gameLogic.checkGuess(room, playerId, operator);
 
     if (result.correct) {
@@ -177,18 +183,29 @@ class MessageHandler {
         message: result.message
       });
     } else {
-      ws.send(JSON.stringify({
-        type: 'guess_result',
-        playerId,
-        operator,
-        message: `猜错了！你猜的是：${operator.name}，请继续尝试！`
-      }));
+      player.guessCount++;
 
-      if (opponent.ws && opponent.ws.readyState === 1) {
-        opponent.ws.send(JSON.stringify({
-          type: 'guess_wrong',
-          message: `玩家 ${player.nickname} 猜错了，继续游戏！`
+      if (player.guessCount >= MAX_GUESSES) {
+        this.broadcastToRoom(roomId, {
+          type: 'game_lost',
+          playerId,
+          message: `玩家 ${player.nickname} 猜错 ${MAX_GUESSES} 次，游戏结束！正确答案是：${opponent.confirmedOperator.name}`
+        });
+      } else {
+        ws.send(JSON.stringify({
+          type: 'guess_result',
+          playerId,
+          operator,
+          guessCount: player.guessCount,
+          message: `猜错了！你猜的是：${operator.name}，还剩 ${MAX_GUESSES - player.guessCount} 次机会，请继续尝试！`
         }));
+
+        if (opponent.ws && opponent.ws.readyState === 1) {
+          opponent.ws.send(JSON.stringify({
+            type: 'guess_wrong',
+            message: `玩家 ${player.nickname} 猜错了（第 ${player.guessCount}/${MAX_GUESSES} 次），继续游戏！`
+          }));
+        }
       }
     }
   }
@@ -201,13 +218,34 @@ class MessageHandler {
 
     room.players[playerId].wantsRestart = true;
 
+    const restartCount = Object.values(room.players).filter(p => p.wantsRestart).length;
+    const playerCount = Object.keys(room.players).length;
+
+    if (restartCount < playerCount) {
+      this.broadcastToRoom(roomId, {
+        type: 'restart_notification',
+        message: `玩家 ${room.players[playerId].nickname} 准备再来一局，等待对方确认...`
+      });
+
+      this.broadcastRoomState(roomId);
+    }
+
     if (roomManager.getAllPlayersReadyForRestart(roomId)) {
       roomManager.resetGameState(roomId);
 
+      const firstPlayer = Object.values(room.players)[0];
+      if (firstPlayer) {
+        room.difficulty = firstPlayer.difficulty || 'hard';
+      }
+
+      gameLogic.setupNewGame(room);
+
       this.broadcastToRoom(roomId, {
-        type: 'game_reset',
-        message: '游戏已重置，请点击准备按钮重新开始'
+        type: 'game_start',
+        message: '游戏已重新开始！'
       });
+
+      this.broadcastGameState(roomId);
     }
   }
 
@@ -228,13 +266,17 @@ class MessageHandler {
 
     const players = Object.values(room.players).map(p => ({
       nickname: p.nickname,
-      isReady: p.isReady
+      isReady: p.isReady,
+      wantsRestart: p.wantsRestart
     }));
+
+    const wantsRestartCount = Object.values(room.players).filter(p => p.wantsRestart).length;
 
     this.broadcastToRoom(roomId, {
       type: 'player_joined',
       players,
-      readyCount: room.readyPlayers.size
+      readyCount: room.readyPlayers.size,
+      wantsRestartCount
     });
   }
 
