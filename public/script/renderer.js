@@ -15,12 +15,16 @@ export function renderOperators() {
     div.className = 'operator-image-container';
 
     const img = document.createElement('img');
-    const encodedName = encodeURIComponent(op.name);
-    const imgPath = `./avatars/${encodedName}.png`;
-    img.src = imgPath;
+    const directPath = `./avatars/${op.name}.png`;
+    img.src = directPath;
     img.alt = op.name;
     img.onerror = function() {
-      this.src = './avatars/land.png';
+      const encodedName = encodeURIComponent(op.name);
+      const encodedPath = `./avatars/${encodedName}.png`;
+      this.src = encodedPath;
+      this.onerror = function() {
+        this.src = './avatars/land.png';
+      };
     };
 
     img.addEventListener('dblclick', () => {
