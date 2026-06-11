@@ -210,5 +210,5 @@ node scripts/start-with-ngrok.js
 - **想法建设**: 瞳老师 >> [绯瞳Hitomi](https://space.bilibili.com/700489083)
 
 ---
-
+[![License Persona](https://lcti.hydroroll.team/badge/agpl-3.0.svg)](https://lcti.hydroroll.team)
 ⭐ 如果觉得这个项目有趣，请给个Star支持一下！
